@@ -2,7 +2,7 @@
  * @file GP8302.cpp
  * @author David Baka
  * @brief
- * @version 0.2.1
+ * @version 0.2.2
  * @date 2023-10-02
  *  
  * @copyright Copyright (c) 2023 David Baka
@@ -68,7 +68,7 @@ gp8302_return_t GP8302::readRegister(gp8302_reg_t reg, uint8_t* value) {
 
     delay(2);
 
-    wire->requestFrom(slaveAddress, 1, true);
+    wire->requestFrom(slaveAddress, 1, (int)true);
     wire->readBytes(value, 1);
 
     return (gp8302_return_t)ret;
