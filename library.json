@@ -1,0 +1,21 @@
+{
+    "name": "GP8302",
+    "version": "0.2.0",
+    "description": "Arduino library for GP8302 I2C 0-25mA DAC",
+    "keywords": "GP8302",
+    "repository":
+    {
+      "type": "git",
+      "url": "https://github.com/bakadave/GP8302.git"
+    },
+    "authors":
+    [
+      {
+        "name": "David Baka",
+        "url": "https://github.com/bakadave/GP8302.git"
+      }
+    ],
+    "license": "MIT",
+    "frameworks": "arduino",
+    "platforms": "*"
+  }
