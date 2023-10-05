@@ -2,7 +2,7 @@
  * @file GP8302.cpp
  * @author David Baka
  * @brief
- * @version 0.2.2
+ * @version 0.2.3
  * @date 2023-10-02
  *  
  * @copyright Copyright (c) 2023 David Baka
@@ -43,7 +43,7 @@ gp8302_return_t GP8302::output_mA(float current) {
     if(!calibrated)
         return GP8302_I2C_OTHER_ERR;
 
-    val = (current - GP8302_MIN_CURRENT)*((cal_20mA - cal_4mA)/(GP8302_MAX_CURRENT - GP8302_MIN_CURRENT) + cal_4mA);
+    val = (current - GP8302_MIN_CURRENT)*((cal_20mA - cal_4mA)/(GP8302_MAX_CURRENT - GP8302_MIN_CURRENT)) + cal_4mA;
 
     ret = outputRaw(val);
 
