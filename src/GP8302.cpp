@@ -32,8 +32,8 @@ gp8302_return_t GP8302::stopOutput() {
 gp8302_return_t GP8302::output_mA(float current) {
     gp8302_return_t ret;
 
-    if(current < GP8302_MIN_CURRENT)
-        current = GP8302_MIN_CURRENT;
+    if(current < 0)
+        current = 0;
 
     if(current > GP8302_MAX_CURRENT)
         current = GP8302_MAX_CURRENT;
