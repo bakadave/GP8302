@@ -1,6 +1,6 @@
 {
     "name": "GP8302",
-    "version": "0.2.3",
+    "version": "0.2.4",
     "description": "Arduino library for GP8302 I2C 0-25mA DAC",
     "keywords": "GP8302",
     "repository":

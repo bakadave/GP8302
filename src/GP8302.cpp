@@ -2,7 +2,7 @@
  * @file GP8302.cpp
  * @author David Baka
  * @brief
- * @version 0.2.3
+ * @version 0.2.4
  * @date 2023-10-02
  *  
  * @copyright Copyright (c) 2023 David Baka
