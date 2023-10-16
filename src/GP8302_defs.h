@@ -2,7 +2,7 @@
  * @file GP8302_defs.h
  * @author David Baka
  * @brief
- * @version 0.2.1
+ * @version 0.2.5
  * @date 2023-10-02
  *  
  * @copyright Copyright (c) 2023 David Baka
@@ -23,8 +23,7 @@ typedef enum : uint8_t{
 #define GP8302_DEFAULT_ADDR         0x58
 #define GP8302_CURRENT_REG          0x02
 #define GP8302_MAX_DAC_VAL          0xFFF
-#define GP8302_MAX_CURRENT          20      // 
-#define GP8302_MIN_CURRENT          4
+#define GP8302_MAX_CURRENT          25      // mA
 
 typedef uint16_t gp8302_out_t;
 typedef uint8_t gp8302_reg_t;

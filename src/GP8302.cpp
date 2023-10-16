@@ -2,7 +2,7 @@
  * @file GP8302.cpp
  * @author David Baka
  * @brief
- * @version 0.2.4
+ * @version 0.2.5
  * @date 2023-10-02
  *  
  * @copyright Copyright (c) 2023 David Baka
@@ -26,37 +26,39 @@ gp8302_return_t GP8302::outputRaw(gp8302_out_t dac) {
 }
 
 gp8302_return_t GP8302::stopOutput() {
-    return outputRaw(0);
+    return outputRaw((gp8302_out_t)0x0000);
 }
 
 gp8302_return_t GP8302::output_mA(float current) {
-    gp8302_return_t ret;
+    if(current < curr_min)
+        current = curr_min;
 
-    if(current < 0)
-        current = 0;
-
-    if(current > GP8302_MAX_CURRENT)
-        current = GP8302_MAX_CURRENT;
-    
-    gp8302_out_t val = 0;
+    if(current > curr_max)
+        current = curr_max;
 
     if(!calibrated)
         return GP8302_I2C_OTHER_ERR;
-
-    val = (current - GP8302_MIN_CURRENT)*((cal_20mA - cal_4mA)/(GP8302_MAX_CURRENT - GP8302_MIN_CURRENT)) + cal_4mA;
-
-    ret = outputRaw(val);
-
-    return ret;
+    
+    gp8302_out_t val = current * calib_val;
+    return outputRaw(val);
 }
 
-bool GP8302::calibrate(uint16_t dac_4mA, uint16_t dac_20mA) {
-    if((dac_4mA >= dac_20mA) || (dac_20mA > GP8302_MAX_DAC_VAL))
+bool GP8302::calibrate(uint16_t dac, float current) {
+    if((dac <= 0x00) || (dac > GP8302_MAX_DAC_VAL) || (current <= 0))
         return false;
-    cal_4mA  = dac_4mA;
-    cal_20mA = dac_20mA;
+
+    calib_val = (float)dac / current;
     calibrated = true;
     return true;
+}
+
+void GP8302::setMinMaxCurrent(float min, float max) {
+    curr_min = min;
+    
+    if(max > GP8302_MAX_CURRENT)
+        curr_max = GP8302_MAX_CURRENT;
+    
+    curr_max = max;
 }
 
 // ================= PRIVATE METHODS =================
@@ -68,7 +70,7 @@ gp8302_return_t GP8302::readRegister(gp8302_reg_t reg, uint8_t* value) {
 
     delay(2);
 
-    wire->requestFrom(slaveAddress, 1, (int)true);
+    wire->requestFrom((int)slaveAddress, 1, (int)true);
     wire->readBytes(value, 1);
 
     return (gp8302_return_t)ret;

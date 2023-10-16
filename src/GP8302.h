@@ -2,7 +2,7 @@
  * @file GP8302.h
  * @author David Baka
  * @brief
- * @version 0.2
+ * @version 0.2.5
  * @date 2023-10-02
  *  
  * @copyright Copyright (c) 2023 David Baka
@@ -51,11 +51,18 @@ class GP8302 {
 
         /**
          * @brief sets calibration values for 4mA and 20mA to use in current loops
-         * @param dac_4mA raw DAC value for an output of 4mA
-         * @param dac_20mA raw DAC value for an output of 20mA
+         * @param dac raw DAC value for calibraiton current current
+         * @param current calibration current value in mA
          * @return true: sucess false: setting failed
         */
-        bool calibrate(uint16_t dac_4mA, uint16_t dac_20mA);
+        bool calibrate(uint16_t dac, float current = (20.0F));
+
+        /**
+         * @brief sets minimum and maximum current values for output_mA function
+         * @param min minimum current value in mA
+         * @param max maximum current value in mA
+        */
+        void setMinMaxCurrent(float min, float max);
 
     private:
         /**
@@ -74,11 +81,12 @@ class GP8302 {
         */
         gp8302_return_t writeRegister(gp8302_reg_t reg, gp8302_out_t value);
 
-        byte     slaveAddress;
+        uint8_t slaveAddress;
         TwoWire* wire;
-        uint16_t cal_4mA;
-        uint16_t cal_20mA;
-        bool     calibrated = false;
+        float curr_min = 4;
+        float curr_max = 20;
+        float calib_val;
+        bool calibrated = false;
 };
 
 #endif // __GP8302_H__
